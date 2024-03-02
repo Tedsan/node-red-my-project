@@ -8,6 +8,64 @@
         "env": []
     },
     {
+        "id": "ce96849483701e17",
+        "type": "ui-group",
+        "name": "時間",
+        "page": "cd750a434d07c2f9",
+        "width": "6",
+        "height": "1",
+        "order": -1,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "dabd75aedaf5ae24",
+        "type": "ui-base",
+        "name": "画面1",
+        "path": "/dashboard",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "navigationStyle": "default"
+    },
+    {
+        "id": "94690374823bced0",
+        "type": "ui-theme",
+        "name": "テーマ1",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#0094ce",
+            "bgPage": "#eeeeee",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cccccc"
+        },
+        "sizes": {
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "cd750a434d07c2f9",
+        "type": "ui-page",
+        "name": "情報",
+        "ui": "dabd75aedaf5ae24",
+        "path": "/page1",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "94690374823bced0",
+        "order": -1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
         "id": "df33c74ad8d9efe1",
         "type": "inject",
         "z": "d69a7d5f76f857a3",
@@ -21,7 +79,7 @@
                 "vt": "str"
             }
         ],
-        "repeat": "300",
+        "repeat": "1",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
@@ -32,144 +90,7 @@
         "y": 180,
         "wires": [
             [
-                "f73ff10266583f32",
-                "8da43507810aaec6"
-            ]
-        ]
-    },
-    {
-        "id": "17ac8b510d0f1bd0",
-        "type": "debug",
-        "z": "d69a7d5f76f857a3",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 920,
-        "y": 160,
-        "wires": []
-    },
-    {
-        "id": "8da43507810aaec6",
-        "type": "function",
-        "z": "d69a7d5f76f857a3",
-        "name": "function 1",
-        "func": "// Create a Data object from the payload\nvar date = new Date(msg.payload);\n// Change the payload to be a formatted Date string\nmsg.payload = date.toString()\n// Return the message so it can be sent on\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 400,
-        "y": 420,
-        "wires": [
-            [
-                "96f4d02696625879"
-            ]
-        ]
-    },
-    {
-        "id": "f73ff10266583f32",
-        "type": "http request",
-        "z": "d69a7d5f76f857a3",
-        "name": "",
-        "method": "GET",
-        "ret": "txt",
-        "paytoqs": "ignore",
-        "url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.csv",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [],
-        "x": 410,
-        "y": 240,
-        "wires": [
-            [
-                "6d219560115fa613"
-            ]
-        ]
-    },
-    {
-        "id": "6d219560115fa613",
-        "type": "csv",
-        "z": "d69a7d5f76f857a3",
-        "name": "",
-        "sep": ",",
-        "hdrin": true,
-        "hdrout": "none",
-        "multi": "one",
-        "ret": "\\n",
-        "temp": "",
-        "skip": "0",
-        "strings": true,
-        "include_empty_strings": "",
-        "include_null_values": "",
-        "x": 610,
-        "y": 220,
-        "wires": [
-            [
-                "17ac8b510d0f1bd0",
-                "aca7b3099af1ca77"
-            ]
-        ]
-    },
-    {
-        "id": "aca7b3099af1ca77",
-        "type": "switch",
-        "z": "d69a7d5f76f857a3",
-        "name": "",
-        "property": "payload.mag",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "gte",
-                "v": "6",
-                "vt": "num"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 790,
-        "y": 300,
-        "wires": [
-            [
-                "b38b41ed369bcad3"
-            ]
-        ]
-    },
-    {
-        "id": "b38b41ed369bcad3",
-        "type": "change",
-        "z": "d69a7d5f76f857a3",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "PANIC!",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1020,
-        "y": 300,
-        "wires": [
-            [
-                "1a3c1dfb18e7dec3"
+                "ed8eb30929290c5b"
             ]
         ]
     },
@@ -190,7 +111,7 @@
         "wires": []
     },
     {
-        "id": "96f4d02696625879",
+        "id": "3b5c06f5dce92e0c",
         "type": "debug",
         "z": "d69a7d5f76f857a3",
         "name": "debug 3",
@@ -201,8 +122,50 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 640,
-        "y": 420,
+        "x": 700,
+        "y": 180,
         "wires": []
+    },
+    {
+        "id": "88a360dca982f8a0",
+        "type": "ui-text",
+        "z": "d69a7d5f76f857a3",
+        "group": "ce96849483701e17",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "時間表示",
+        "label": "UTC時間：",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#717171",
+        "className": "",
+        "x": 700,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "ed8eb30929290c5b",
+        "type": "function",
+        "z": "d69a7d5f76f857a3",
+        "name": "function 1",
+        "func": "// Unixタイムスタンプをミリ秒単位で取得 (例: 1709413618897)\nvar timestamp = msg.payload;\n\n// JavaScriptのDateオブジェクトを使用して日時に変換\nvar date = new Date(timestamp);\n\n// 日時を年月日時分秒の形式でフォーマット\nvar formattedDate = date.toISOString();\n\n// フォーマットした日時をpayloadにセット\nmsg.payload = formattedDate;\n\n// 変更したメッセージオブジェクトを次のノードに渡す\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 180,
+        "wires": [
+            [
+                "3b5c06f5dce92e0c",
+                "88a360dca982f8a0"
+            ]
+        ]
     }
 ]
